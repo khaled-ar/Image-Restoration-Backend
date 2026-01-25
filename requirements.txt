@@ -1,13 +1,16 @@
+# Web Framework
 fastapi==0.104.1
 uvicorn==0.24.0
 python-multipart==0.0.6
 pydantic==2.5.0
-opencv-python-headless==4.8.1.78
+
+# Computer Vision
 Pillow==10.1.0
 numpy==1.24.3
-pandas==2.0.3
-scikit-image==0.22.0
-imageio==2.33.0
-scipy==1.11.4
-tqdm==4.66.1
-matplotlib==3.7.2
+
+# torch==2.1.0
+# torchvision==0.16.0
+
+# opencv-python-headless==4.8.1.78
+# pandas==2.0.3
+# scikit-image==0.22.0
