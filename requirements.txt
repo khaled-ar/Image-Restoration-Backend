@@ -6,7 +6,6 @@ torchvision==0.25.0
 opencv-python==4.8.1.78
 # opencv-contrib-python==4.8.1.78
 scikit-image==0.22.0
-pillow==10.1.0
 
 # Web Framework
 fastapi==0.104.1
