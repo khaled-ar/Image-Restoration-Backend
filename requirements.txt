@@ -1,10 +1,10 @@
 # Core AI & Deep Learning
-torch
-torchvision
+torch==2.9.1
+torchvision==0.18.1
 
 # Computer Vision
 opencv-python==4.8.1.78
-opencv-contrib-python==4.8.1.78
+# opencv-contrib-python==4.8.1.78
 scikit-image==0.22.0
 pillow==10.1.0
 
@@ -15,14 +15,15 @@ python-multipart==0.0.6
 pydantic==2.5.0
 
 # Utilities
-numpy==1.24.3
+numpy==1.26.4
 pandas==2.1.3
 tqdm==4.66.1
 matplotlib==3.8.2
+Pillow==10.2.0
 
 # Image Processing
 imageio==2.33.0
 scipy==1.11.4
 
-opencv-contrib-python==4.8.1.78  # For guided filter
-scikit-image==0.22.0            # For advanced image processing
+opencv-python-headless==4.9.0.80
+# scikit-image==0.22.0            # For advanced image processing
