@@ -17,7 +17,7 @@ RUN pip install torch==2.1.0+cpu torchvision==0.16.0+cpu -f https://download.pyt
 RUN pip install -r requirements.txt
 
 COPY main.py .
-COPY utils/ ./utils/  # إذا كان utils ضروريًا للتشغيل
+COPY utils/ ./utils/
 
 RUN mkdir -p storage uploads
 
