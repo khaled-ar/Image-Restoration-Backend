@@ -70,7 +70,7 @@ API_CONFIG = {
     "debug": True,
     "max_file_size": 15 * 1024 * 1024,
     "allowed_extensions": [".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".webp"],
-    "base_url": "https://image-restoration-backend.onrender.com"
+    "base_url": "https://image-restoration-backend-1.onrender.com"
 }
 
 # Model loading configuration
