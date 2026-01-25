@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv
+venv/
+env/
+
+# البيانات والنتائج الكبيرة
+data/
+logs/
+results/
+storage/
+checkpoints/
+pretrained_models/
+ai_models/
+
+# Git
+.git/
+
+# نظام
+.DS_Store
+*.log
+*.sqlite3
+*.db
+*.cache
+.ipynb_checkpoints
+
+# ملفات مؤقتة
+*.tmp
+*.temp
+
+# ملفات التكوين المحلية
+config.py
+create_models.py
