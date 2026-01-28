@@ -1024,7 +1024,7 @@ async def upload_image(
         
         # Generate ID
         file_id = str(uuid.uuid4())
-        file_ext = os.path.splitext(file.filename)[1] or ".jpg"
+        file_ext = os.path.splitext(file.filename)[1] or ".jpg" 
         
         # Save original
         original_path = f"storage/original/{file_id}{file_ext}"
