@@ -1006,7 +1006,6 @@ def cleanup_directory(directory, max_files):
 
 # ==================== API ENDPOINTS ====================
 
-
 @app.post("/upload")
 async def upload_image(
     background_tasks: BackgroundTasks,
