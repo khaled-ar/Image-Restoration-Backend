@@ -60,7 +60,7 @@ class SuperResolutionModel:
         if model_path and model_path.exists():
             self.load_model(model_path)
         else:
-            print("⚠️ No pretrained SR model found. Using random weights.")
+            print("No pretrained SR model found. Using random weights.")
             self.model.to(self.device)
     
     def load_model(self, model_path):
@@ -70,9 +70,9 @@ class SuperResolutionModel:
             self.model.load_state_dict(checkpoint)
             self.model.to(self.device)
             self.model.eval()
-            print(f"✅ Super-resolution model loaded from {model_path}")
+            print(f"Super-resolution model loaded from {model_path}")
         except Exception as e:
-            print(f"❌ Error loading SR model: {e}")
+            print(f"Error loading SR model: {e}")
             self.model.to(self.device)
             self.model.eval()
     
@@ -94,7 +94,7 @@ class SuperResolutionModel:
                 raise ValueError(f"Cannot read image: {image_path}")
             
             original_shape = image.shape
-            print(f"📈 Upscaling image from {original_shape[1]}x{original_shape[0]} to "
+            print(f"Upscaling image from {original_shape[1]}x{original_shape[0]} to "
                   f"{original_shape[1]*self.scale_factor}x{original_shape[0]*self.scale_factor}")
             
             # Resize if too large for processing
@@ -142,7 +142,7 @@ class SuperResolutionModel:
             return upscaled_np
             
         except Exception as e:
-            print(f"❌ Error in super-resolution: {e}")
+            print(f"Error in super-resolution: {e}")
             # Fallback to traditional upscaling
             return self._fallback_upscale(image_path, output_path)
     

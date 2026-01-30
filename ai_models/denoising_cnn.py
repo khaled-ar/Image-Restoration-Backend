@@ -50,7 +50,7 @@ class DenoisingModel:
         if model_path and model_path.exists():
             self.load_model(model_path)
         else:
-            print("⚠️ No pretrained model found. Using randomly initialized model.")
+            print("No pretrained model found. Using randomly initialized model.")
             self.model.to(self.device)
     
     def load_model(self, model_path):
@@ -64,9 +64,9 @@ class DenoisingModel:
             
             self.model.to(self.device)
             self.model.eval()
-            print(f"✅ Denoising model loaded from {model_path}")
+            print(f"Denoising model loaded from {model_path}")
         except Exception as e:
-            print(f"❌ Error loading denoising model: {e}")
+            print(f"Error loading denoising model: {e}")
             self.model.to(self.device)
             self.model.eval()
     
@@ -124,7 +124,7 @@ class DenoisingModel:
             return denoised_np
             
         except Exception as e:
-            print(f"❌ Error in denoising: {e}")
+            print(f"Error in denoising: {e}")
             # Fallback to OpenCV denoising
             return self._fallback_denoise(image_path, output_path)
     

@@ -85,9 +85,8 @@ class ColorEnhancer:
         self.realistic_mode = realistic_mode
         self.model = ColorEnhancementNet()
         
-        # إضافة هذا لتتبع حالة النموذج
         self.model_loaded = False
-        self.model_uses_tanh = True  # النموذج الأصلي يستخدم Tanh
+        self.model_uses_tanh = True
         
         if model_path and model_path.exists():
             self.load_model(model_path)
@@ -102,9 +101,9 @@ class ColorEnhancer:
             self.model.load_state_dict(checkpoint)
             self.model.to(self.device)
             self.model.eval()
-            print(f"✅ Color enhancer model loaded from {model_path}")
+            print(f"Color enhancer model loaded from {model_path}")
         except Exception as e:
-            print(f"❌ Error loading color enhancer: {e}")
+            print(f"Error loading color enhancer: {e}")
             self.model.to(self.device)
             self.model.eval()
     
@@ -159,7 +158,7 @@ class ColorEnhancer:
             original_shape = image.shape
             is_bw = self.is_black_white(image)
             
-            print(f"🎨 Image analysis: {'Black-White' if is_bw else 'Color'} image detected")
+            print(f"Image analysis: {'Black-White' if is_bw else 'Color'} image detected")
             
             # Resize if too large
             max_dim = 1024
@@ -169,10 +168,10 @@ class ColorEnhancer:
                 image = cv2.resize(image, new_size, interpolation=cv2.INTER_AREA)
             
             if is_bw and self.realistic_mode:
-                print("🖤 Applying realistic colorization to B/W image...")
+                print("Applying realistic colorization to B/W image...")
                 enhanced = self._realistic_colorization(image)
             else:
-                print("🌈 Enhancing colors while preserving original...")
+                print("Enhancing colors while preserving original...")
                 enhanced = self._enhance_with_ai(image, preserve_original)
             
             # Resize back to original size if needed
@@ -188,43 +187,33 @@ class ColorEnhancer:
             return enhanced
             
         except Exception as e:
-            print(f"❌ Error in color enhancement: {e}")
+            print(f"Error in color enhancement: {e}")
             # Fallback to traditional enhancement
             return self._fallback_enhance(image_path, output_path, is_bw)
     
     def _enhance_with_ai(self, image, preserve_original=True):
         """Enhance colors using neural network - FIXED VERSION"""
         
-        # 1. تحميل النموذج أولاً لمعرفة نوعه
-        model_type = self._get_model_type()  # تحتاج لإنشاء هذه الدالة
+        model_type = self._get_model_type()
         
-        # 2. تطبيع المدخلات حسب نوع النموذج
         if model_type == "sigmoid":
-            # النماذج المدرَّسة (Sigmoid) تتوقع [0, 1]
             img_float = image.astype(np.float32) / 255.0
-        else:  # tanh أو unknown
-            # النماذج الأصلية (Tanh) تتوقع [-1, 1]
+        else: 
             img_float = image.astype(np.float32) / 127.5 - 1.0
         
-        # 3. التحويل إلى Tensor
         img_tensor = torch.from_numpy(img_float).permute(2, 0, 1).unsqueeze(0).float()
         img_tensor = img_tensor.to(self.device)
         
-        # 4. تطبيق النموذج
         with torch.no_grad():
             enhanced_tensor = self.model(img_tensor)
         
-        # 5. تحويل المخرجات حسب نوع النموذج
         enhanced_np = enhanced_tensor.squeeze(0).permute(1, 2, 0).cpu().numpy()
         
         if model_type == "sigmoid":
-            # تحويل [0, 1] → [0, 255]
             enhanced_np = np.clip(enhanced_np * 255, 0, 255).astype(np.uint8)
         else:  # tanh
-            # تحويل [-1, 1] → [0, 255]
             enhanced_np = np.clip((enhanced_np + 1.0) * 127.5, 0, 255).astype(np.uint8)
         
-        # 6. الدمج مع الأصل
         if preserve_original:
             alpha = 0.3
             enhanced_np = cv2.addWeighted(image, 1 - alpha, enhanced_np, alpha, 0)
@@ -234,7 +223,6 @@ class ColorEnhancer:
     def _get_model_type(self):
         """Detect if model uses Tanh or Sigmoid"""
         if not hasattr(self, '_model_type_detected'):
-            # اختبار بسيط
             test_input = torch.randn(1, 3, 64, 64).to(self.device)
             with torch.no_grad():
                 test_output = self.model(test_input)
@@ -244,13 +232,13 @@ class ColorEnhancer:
             
             if output_min >= -1.1 and output_max <= 1.1:
                 self._model_type_detected = "tanh"
-                print(f"   🔍 Model uses TANH (output: [{output_min:.3f}, {output_max:.3f}])")
+                print(f"   Model uses TANH (output: [{output_min:.3f}, {output_max:.3f}])")
             elif output_min >= 0 and output_max <= 1:
                 self._model_type_detected = "sigmoid"
-                print(f"   🔍 Model uses SIGMOID (output: [{output_min:.3f}, {output_max:.3f}])")
+                print(f"   Model uses SIGMOID (output: [{output_min:.3f}, {output_max:.3f}])")
             else:
                 self._model_type_detected = "unknown"
-                print(f"   ⚠️ Unknown output range: [{output_min:.3f}, {output_max:.3f}]")
+                print(f"   Unknown output range: [{output_min:.3f}, {output_max:.3f}]")
         
         return self._model_type_detected
     

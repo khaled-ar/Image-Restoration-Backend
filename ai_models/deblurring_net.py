@@ -68,7 +68,7 @@ class DeblurringModel:
         if model_path and model_path.exists():
             self.load_model(model_path)
         else:
-            print("⚠️ No pretrained deblurring model found. Using random weights.")
+            print("No pretrained deblurring model found. Using random weights.")
             self.model.to(self.device)
     
     def load_model(self, model_path):
@@ -78,9 +78,9 @@ class DeblurringModel:
             self.model.load_state_dict(checkpoint)
             self.model.to(self.device)
             self.model.eval()
-            print(f"✅ Deblurring model loaded from {model_path}")
+            print(f"Deblurring model loaded from {model_path}")
         except Exception as e:
-            print(f"❌ Error loading deblurring model: {e}")
+            print(f"Error loading deblurring model: {e}")
             self.model.to(self.device)
             self.model.eval()
     
@@ -138,7 +138,7 @@ class DeblurringModel:
             return deblurred_np
             
         except Exception as e:
-            print(f"❌ Error in deblurring: {e}")
+            print(f"Error in deblurring: {e}")
             # Fallback to OpenCV deblurring
             return self._fallback_deblur(image_path, output_path)
     
